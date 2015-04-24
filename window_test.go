@@ -65,7 +65,7 @@ func m(size, multiple int, b *testing.B) {
     b.StartTimer()
     for i := 0; i < b.N; i++ {
         for j := 0; j < TIMES; j++ {
-            w.PushBack(float64(i))
+            w.PushBack(string(i))
         }
     }
 }
@@ -77,7 +77,7 @@ func l(size int, b *testing.B) {
     b.StartTimer()
     for i := 0; i < b.N; i++ {
         for j := 0; j < TIMES; j++ {
-            lst.PushBack(float64(j))
+            lst.PushBack(string(j))
             if (lst.Len() > size) {
                 lst.Remove(lst.Front())
             }
@@ -93,7 +93,7 @@ func r(size int, b *testing.B) {
     b.StartTimer()
     for i := 0; i < b.N; i++ {
         for j := 0; j < TIMES; j++ {
-            rng.Value = float64(j)
+            rng.Value = string(j)
             rng = rng.Prev()
         }
     }
@@ -102,7 +102,7 @@ func r(size int, b *testing.B) {
 func getList(size int) (l *list.List){
     l = list.New()
     for i := 0; i < size; i++ {
-        l.PushBack(float64(i))
+        l.PushBack(string(i))
     }
     return
 }
@@ -110,7 +110,7 @@ func getList(size int) (l *list.List){
 func getRing(size int) (r *ring.Ring) {
     r = ring.New(size)
     for i := 0; i < size; i++ {
-        r.Value = float64(i)
+        r.Value = string(i)
         r = r.Prev()
     }
     return
@@ -119,23 +119,23 @@ func getRing(size int) (r *ring.Ring) {
 func getWindow(size int) (w *MovingWindow) {
     w = New(size, 1)
     for i := 0; i < size; i++ {
-        w.PushBack(float64(i))
+        w.PushBack(string(i))
     }
     return
 }
 
 func slicifyList(lst *list.List) {
-    s := make([]float64, 0, lst.Len())
+    s := make([]string, 0, lst.Len())
     for e := lst.Front(); e != nil; e = e.Next() {
-        s = append(s, e.Value.(float64))
+        s = append(s, e.Value.(string))
     }
 }
 
 func slicifyRing(r *ring.Ring) {
     l := r.Len()
-    s := make([]float64, 0, l)
+    s := make([]string, 0, l)
     for i := 0; i < l; i++ {
-        s = append(s, r.Value.(float64))
+        s = append(s, r.Value.(string))
         r = r.Prev()
     }
 }
@@ -143,5 +143,5 @@ func slicifyRing(r *ring.Ring) {
 // not necessary, but to be completely fair
 func slicifyWindow(w *MovingWindow) {
     s := w.Slice()
-    s[0] = 0
+    s[0] = string(0)
 }

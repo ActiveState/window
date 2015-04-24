@@ -13,7 +13,7 @@ package window
 // multiple of the intended capacity of the queue
 // so that copying is less frequent.
 type MovingWindow struct {
-    arr  []float64
+    arr  []string
     size int
     head int
     tail int
@@ -21,7 +21,7 @@ type MovingWindow struct {
 
 // PushBack will push a new piece of data into
 // the moving window
-func (m *MovingWindow) PushBack(v float64) {
+func (m *MovingWindow) PushBack(v string) {
     // if the array is full, rewind
     if m.tail == len(m.arr) {
         m.rewind()
@@ -55,7 +55,7 @@ func (m *MovingWindow) rewind() {
 // good only until the next call to push. If
 // you wish to save the reference, you should
 // make a copy.
-func (m *MovingWindow) Slice() []float64 {
+func (m *MovingWindow) Slice() []string {
     return m.arr[m.head:m.tail]
 }
 
@@ -80,7 +80,7 @@ func New(size, multiple int) *MovingWindow {
     }
     capacity := size*multiple
     return &MovingWindow{
-        arr:  make([]float64, capacity, capacity),
+        arr:  make([]string, capacity, capacity),
         size: size,
     }
 }
